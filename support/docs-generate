@@ -1,0 +1,23 @@
+#!/bin/sh -eu
+
+cd "$(dirname "$0")/.."
+
+nix run \
+    --ignore-environment \
+    --keep LANG \
+    --keep LOCALE_ARCHIVE \
+    --file nix \
+    distribution.nix-project-org2gfm \
+    nixpkgs.ansifilter \
+    nixpkgs.coreutils \
+    nixpkgs.gnugrep \
+    nixpkgs.tree \
+    --command \
+    org2gfm \
+    --path-bin \
+    --exclude links.org \
+    --exclude nix.mac.org \
+    --exclude scaffold \
+    --nix "$(command -v nix)" \
+    --evaluate \
+    "$@"
